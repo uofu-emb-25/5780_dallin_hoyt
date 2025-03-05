@@ -1,4 +1,4 @@
-TARGET ?= LAB2
+TARGET ?= LAB5
 
 PREFIX = arm-none-eabi-
 CC = $(PREFIX)gcc

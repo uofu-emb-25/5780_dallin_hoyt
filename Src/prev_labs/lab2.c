@@ -36,6 +36,7 @@ int lab2_main(void) {
 
     // Route EXTI        
     My_HAL_RCC_SYSCFG_CLK_ENABLE();
+    __HAL_RCC_SYSCFG_CLK_ENABLE();
 
     assert(SYSCFG->EXTICR[0] == 0x0UL);
     My_HAL_Route_EXTI(0, BANKA);

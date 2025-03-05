@@ -76,12 +76,6 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   HAL_IncTick();
-  static int count = 0;
-  count += 1;
-  if (count >= 200) {
-    count = 0;
-    My_HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_7);
-  }
 }
 
 /******************************************************************************/
