@@ -3,6 +3,7 @@
 
 int main(void)
 {
+  lab5_main();
   #if defined(LAB1)
   lab1_main();
   #elif defined(LAB2)

@@ -83,7 +83,7 @@ int lab5_main(void) {
         GPIO_SPEED_FREQ_LOW    
     };
     My_HAL_GPIO_Init(GPIOB, &initStr);
-    initStr = (GPIO_InitTypeDef){GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9,
+    initStr = (GPIO_InitTypeDef){GPIO_PIN_6,
         GPIO_MODE_OUTPUT_PP,
         GPIO_NOPULL,
         GPIO_SPEED_FREQ_LOW    
@@ -110,8 +110,6 @@ int lab5_main(void) {
     send_stop();
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_RESET);
     while (1) {
-        HAL_Delay(100);
-
         int16_t x = 0;
         uint8_t XH[] = {0x29U};
         send_data(XH, 1);
@@ -123,8 +121,7 @@ int lab5_main(void) {
         data_in = read_data();
         x |= data_in;
         send_stop();
-        
-        int16_t y = 0;
+        uint16_t y = 0;
         uint8_t YH[] = {0x2BU};
         send_data(YH, 1);
         data_in = read_data();
@@ -135,25 +132,16 @@ int lab5_main(void) {
         data_in = read_data();
         y |= data_in;
         send_stop();
-        if (x > 8192) {
-            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET);
-        } else if (x < -8192) {
-            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_SET);
-        } else {
-            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET);
-        }
-        if (y > 8192) {
+        if (x > 16) {
             HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
             HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
-        } else if (y < -8192) {
+        } else if (x < -16) {
             HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_RESET);
             HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);
         } else {
             HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_RESET);
             HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
         }
+        HAL_Delay(100);
     }
 }

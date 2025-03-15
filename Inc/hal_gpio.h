@@ -17,10 +17,10 @@
 enum GPIOBank {
     BANKA = 0, BANKB = 1, BANKC = 2, BANKD = 3, BANKE = 4, BANKF = 5
 };
-
+    //(reg) &= ~(((1 << (bit_count)) - 1) << (pos)); 
+    //(reg) |= ((value) & ((1 << (bit_count)) - 1)) << (pos); 
 #define SET_BITS(reg, pos, bit_count, value) { \
-    (reg) &= ~(((1 << (bit_count)) - 1) << (pos)); \
-    (reg) |= ((value) & ((1 << (bit_count)) - 1)) << (pos); \
+    (reg) = ((reg) & ~(((1 << (bit_count)) - 1) << (pos))) | (((value) & ((1 << (bit_count)) - 1)) << (pos)); \
 }
 
 #define GET_BITS(reg, pos, bit_count) (((reg) >> (pos)) & ((1 << (bit_count)) - 1))
